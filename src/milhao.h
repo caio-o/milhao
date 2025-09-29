@@ -6,4 +6,10 @@
  * FUNCOES IMPLEMENTADAS EM "milhao.c".
  */
 
+/**
+ *  Espera que o usuário termine a linha antes de continuar.
+ *
+ */
+void esperaEnter ();
+
 #endif

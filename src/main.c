@@ -17,9 +17,9 @@
 
 int main (void)
 {
-	printf("\n\nOla\n\n");
+	printf("\n\nOla, bem-vindo ao show do milhao!\n\n");
 
-
+	esperaEnter ();
 	printf("\n\nFim de jogo!\n\n");
-	return 1;
+	return 0;
 }
