@@ -19,7 +19,7 @@ typedef struct
 	char nivel;
 	char descricao[200];
 	char alt[4][30];
-	char alt_correta;
+	char altCorreta;
 } pergunta;
 
 /**
@@ -33,5 +33,19 @@ void esperaEnter ();
  *
  */
 pergunta* pegaPergunta (char nivel);
+
+/**
+ * Abre o arquivo encontrado em <caminho>, e carrega todos os dados
+ * como perguntas, até o fim do arquivo, armazenando em um vetor.
+ * Retorna o vetor de perguntas.
+ * 
+ */
+pergunta* carregaPerguntas (const char* caminho);
+
+/**
+ *  Imprime pergunta no console. Retorna o numero de caracteres
+ * impressos ou numero negativo em caso de erro.
+ */
+int printPergunta (const pergunta perg, const int num);
 
 #endif
