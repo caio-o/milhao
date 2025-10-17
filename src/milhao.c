@@ -34,12 +34,19 @@ Pergunta %d: %s\n\
 
 size_t indiceAleatorio (int nivel)
 {	
-	return IND_NIVEL(nivel) + random() % N_PERGUNTAS_NIVEL_ARQ;
+	return nivel == (int) SUPER_DIFICIL ?
+		IND_NIVEL (nivel) + random() % N_PERGUNTAS_SUPER_ARQ :
+		IND_NIVEL (nivel) + random() % N_PERGUNTAS_NIVEL_ARQ;
 }
 
 pergunta* pegaPergunta (int nivel, FILE* fb) {
 	pergunta *perg = (pergunta*) malloc (sizeof (pergunta));
-	
+
+	if (nivel > (int) MAXIMO)
+		nivel = MAXIMO;
+	if (nivel < (int) MINIMO)
+		nivel = (int) MINIMO;
+
 	if (perg) {			
 		fseek (fb, indiceAleatorio (nivel) * sizeof(pergunta), SEEK_SET);
 		fread (perg, sizeof (pergunta), 1, fb);

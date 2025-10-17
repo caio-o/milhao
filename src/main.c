@@ -21,17 +21,39 @@ int main (void)
 {
 	FILE *f = fopen("assets/perguntas.dat", "r");
 	pergunta* pPer = NULL;
+	int pergAtual = 1;
 
 	srand (time(NULL));
 
 	printf("\n\nOla, bem-vindo ao Show do Milhao!\n\n");
 
-	pPer = pegaPergunta (0, f);
-	printPergunta (*pPer, 1);
+	pPer = pegaPergunta (FACIL, f);
+	printPergunta (*pPer, pergAtual++);
 
 	esperaEnter ();
-	printf("\n\nFim de jogo!\n\n");
+
+	free (pPer);
+	pPer = pegaPergunta (MEDIO, f);
+	printPergunta (*pPer, pergAtual++);
+
+	esperaEnter ();
+
+	free (pPer);
+	pPer = pegaPergunta (DIFICIL, f);
+	printPergunta (*pPer, pergAtual++);
+
+	esperaEnter ();
 	
+	free (pPer);
+	pPer = pegaPergunta (SUPER_DIFICIL, f);
+	printPergunta (*pPer, pergAtual++);
+
+	esperaEnter ();
+	
+	printf("\n\nFim de jogo!\n\n");
+
+	
+
 	fclose(f);
 	if (pPer) free (pPer);
 

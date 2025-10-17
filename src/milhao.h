@@ -8,7 +8,7 @@
 #define N_PERGUNTAS_SUPER_ARQ  10 
 #define N_PERGUNTAS_ARQ        70
 
-#define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x))
+#define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x-1))
 
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
@@ -30,6 +30,17 @@ typedef struct
 	char alt[4][30];
 	char altCorreta;
 } pergunta;
+
+typedef enum {
+	MINIMO         = 1,
+
+	FACIL          = 1,
+	MEDIO          = 2,
+	DIFICIL        = 3,
+	SUPER_DIFICIL  = 4,
+
+	MAXIMO         = 4
+} niveis;
 
 /**
  *  Espera que o usuário termine a linha antes de continuar.
