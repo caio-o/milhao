@@ -14,23 +14,26 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "milhao.h"
 
 int main (void)
 {
-	FILE *f = fopen("../assets/perguntas.dat", "r");
-	pergunta* vPer = (pergunta*) malloc (sizeof(pergunta)*2);
+	FILE *f = fopen("assets/perguntas.dat", "r");
+	pergunta* pPer = NULL;
 
-	printf("\n\nOla, bem-vindo ao show do milhao!\n\n");
-	
-	
-	fread(vPer, sizeof(pergunta), 2, f);
-		
-	fclose(f);
+	srand (time(NULL));
 
-	printPergunta (vPer[0], 1);
+	printf("\n\nOla, bem-vindo ao Show do Milhao!\n\n");
+
+	pPer = pegaPergunta (0, f);
+	printPergunta (*pPer, 1);
 
 	esperaEnter ();
 	printf("\n\nFim de jogo!\n\n");
+	
+	fclose(f);
+	if (pPer) free (pPer);
+
 	return 0;
 }

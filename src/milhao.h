@@ -1,5 +1,14 @@
 #ifndef __MILHAO_H__
 #define __MILHAO_H__
+ 
+#define N_PERGUNTAS_NIVEL       5
+#define N_PERGUNTAS_TOTAL      16
+#define N_RECURSO_PULAR         3
+#define N_PERGUNTAS_NIVEL_ARQ  20
+#define N_PERGUNTAS_SUPER_ARQ  10 
+#define N_PERGUNTAS_ARQ        70
+
+#define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x))
 
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
@@ -12,7 +21,7 @@
  *  nivel:        dificuldade da questão. 
  *  descricicao:  enunciado de tamanho maximo 200 ( termina em '\0' ).
  *  alt:          vetor de strings correspondedo as possiveis respostas.
- *  alt_correta:  alternativa correta dentre as <alt>
+ *  altcorreta:  alternativa correta dentre as <alt>
  */
 typedef struct
 {
@@ -24,23 +33,13 @@ typedef struct
 
 /**
  *  Espera que o usuário termine a linha antes de continuar.
- *
  */
-void esperaEnter ();
+void esperaEnter (void);
 
 /**
  *  Seleciona uma pergunta aleatória do nível dado.
- *
  */
-pergunta* pegaPergunta (char nivel);
-
-/**
- * Abre o arquivo encontrado em <caminho>, e carrega todos os dados
- * como perguntas, até o fim do arquivo, armazenando em um vetor.
- * Retorna o vetor de perguntas.
- * 
- */
-pergunta* carregaPerguntas (const char* caminho);
+pergunta* pegaPergunta (int nivel, FILE* f);
 
 /**
  *  Imprime pergunta no console. Retorna o numero de caracteres
