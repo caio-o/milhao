@@ -6,7 +6,7 @@
 /*      TRABALHO PRÁTICO 2025.2: JOGO DO MILHAO          */
 /*                                                       */
 /*      Alunos: Luan Rodolfo dos Santos Leme             */
-/*              Henrico ?? Queiroz                       */
+/*              Henrico Oliveira de Queiroz              */
 /*              Caio e Silva Barbieri                    */
 /*                                                       */
 /*                                                       */
@@ -27,36 +27,26 @@ int main (void)
 
 	printf("\n\nOla, bem-vindo ao Show do Milhao!\n\n");
 
-	pPer = pegaPergunta (FACIL, f);
-	printPergunta (*pPer, pergAtual++);
-	printAjuda(3,3,3,3);
+	for(int i = 0; i < 4; i++){
+		// depois trocar dificuldade para niveis diferentes
+		pPer = pegaPergunta (FACIL, f);
+		printPergunta (*pPer, pergAtual++);
+		printAjuda(3,3,3,3);
+		char resposta = lerResposta();
 
-	esperaEnter ();
 
-	free (pPer);
-	pPer = pegaPergunta (MEDIO, f);
-	printPergunta (*pPer, pergAtual++);
-	printAjuda(3,3,3,3);
-
-	esperaEnter ();
-
-	free (pPer);
-	pPer = pegaPergunta (DIFICIL, f);
-	printPergunta (*pPer, pergAtual++);
-	printAjuda(3,3,3,3);
-
-	esperaEnter ();
-	
-	free (pPer);
-	pPer = pegaPergunta (SUPER_DIFICIL, f);
-	printPergunta (*pPer, pergAtual++);
-	printAjuda(3,3,3,3);
-
-	esperaEnter ();
+		if(pPer->altCorreta != resposta){
+			printf("\nResposta incorreta! A resposta correta era [%c].\n", pPer->altCorreta);
+		}
+		else{
+			printf("\nResposta correta!\n");
+		}
+		
+		esperaEnter ();
+	}
 	
 	printf("\n\nFim de jogo!\n\n");
 
-	
 
 	fclose(f);
 	if (pPer) free (pPer);

@@ -64,4 +64,6 @@ int printPergunta (const pergunta perg, const int num);
 
 void printAjuda(int q1, int q2, int q3, int q4);
 
+char lerResposta(void);
+
 #endif
