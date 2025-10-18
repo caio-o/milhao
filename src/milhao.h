@@ -1,6 +1,10 @@
 #ifndef __MILHAO_H__
 #define __MILHAO_H__
- 
+
+#if defined(_WIN32) || defined(WIN32)
+#define random(x) rand(x)
+#endif
+
 #define N_PERGUNTAS_NIVEL       5
 #define N_PERGUNTAS_TOTAL      16
 #define N_RECURSO_PULAR         3
