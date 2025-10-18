@@ -29,24 +29,28 @@ int main (void)
 
 	pPer = pegaPergunta (FACIL, f);
 	printPergunta (*pPer, pergAtual++);
+	printAjuda(3,3,3,3);
 
 	esperaEnter ();
 
 	free (pPer);
 	pPer = pegaPergunta (MEDIO, f);
 	printPergunta (*pPer, pergAtual++);
+	printAjuda(3,3,3,3);
 
 	esperaEnter ();
 
 	free (pPer);
 	pPer = pegaPergunta (DIFICIL, f);
 	printPergunta (*pPer, pergAtual++);
+	printAjuda(3,3,3,3);
 
 	esperaEnter ();
 	
 	free (pPer);
 	pPer = pegaPergunta (SUPER_DIFICIL, f);
 	printPergunta (*pPer, pergAtual++);
+	printAjuda(3,3,3,3);
 
 	esperaEnter ();
 	

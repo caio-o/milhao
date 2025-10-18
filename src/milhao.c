@@ -59,3 +59,12 @@ pergunta* pegaPergunta (int nivel, FILE* fb) {
 	
 	return perg;
 }
+
+void printAjuda(int q1, int q2, int q3, int q4) {
+	printf("-- Ajuda --\n");
+	if (q1) printf("[1] Pular pergunta (%dx)\n", q1);
+	if (q2) printf("[2] Pedir ajuda a plateia (%dx)\n", q2);
+	if (q3) printf("[3] Pedir ajuda aos universitarios (%dx)\n", q3);
+	if (q4) printf("[4] Pedir ajuda as cartas (%dx)\n", q4);
+	printf("[5] Parar\n");
+}
