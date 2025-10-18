@@ -57,5 +57,6 @@ int main (void)
 	fclose(f);
 	if (pPer) free (pPer);
 
+	// comentário teste
 	return 0;
 }
