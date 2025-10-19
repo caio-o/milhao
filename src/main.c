@@ -1,9 +1,9 @@
 /*********************************************************/
 /*                                                       */
-/*      FACULDA DE COMPUTACAO - FACOM UFMS               */
+/*      FACULDADE DE COMPUTACAO - FACOM UFMS             */
 /*      ALGORITMOS E PROGRAMACAO 2                       */
 /*      Prof.: Anderson Bessa da Costa                   */
-/*      TRABALHO PRÁTICO 2025.2: JOGO DO MILHAO          */
+/*      TRABALHO PRÁTICO 2025.2: SHOW DO MILHÃO          */
 /*                                                       */
 /*      Alunos: Luan Rodolfo dos Santos Leme             */
 /*              Henrico ?? Queiroz                       */
