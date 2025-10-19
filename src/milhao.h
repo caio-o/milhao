@@ -62,4 +62,6 @@ pergunta* pegaPergunta (int nivel, FILE* f);
  */
 int printPergunta (const pergunta perg, const int num);
 
+char esperaResposta (const char* alternativas);
+
 #endif

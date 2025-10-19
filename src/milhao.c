@@ -59,3 +59,15 @@ pergunta* pegaPergunta (int nivel, FILE* fb) {
 	
 	return perg;
 }
+
+char esperaResposta (const char* alternativas)
+{
+	char c;
+
+	do {
+		c = (char) fgetc (stdin);
+		fflush (stdin);
+	} while (!strchr(alternativas, c));
+
+	return c;
+}

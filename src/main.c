@@ -22,37 +22,36 @@ int main (void)
 	FILE *f = fopen("assets/perguntas.dat", "r");
 	pergunta* pPer = NULL;
 	int pergAtual = 1;
+	
+	/* Variaveis do loop */
+	niveis niv;
+	char resp;
 
 	srand (time(NULL));
 
 	printf("\n\nOla, bem-vindo ao Show do Milhao!\n\n");
 
-	pPer = pegaPergunta (FACIL, f);
-	printPergunta (*pPer, pergAtual++);
+	for (niv = MINIMO, resp = ','; niv <= MAXIMO; niv++)
+	{
+		pPer = pegaPergunta (niv, f);
+		printPergunta (*pPer, pergAtual++);
+		resp = esperaResposta ("abcd");
+		
+		printf ("    Voce escolheu: (%c): %s\n", 
+				resp, 
+				pPer->alt [resp - (int)'a']);
+		
+		if (resp == pPer->altCorreta) 
+			printf ("    A resposta está.... correta!\n");
+		else {
+			printf ("    A resposta está.... errada!\n\n");
+			printf ("    A resposta correta era (%c): %s\n", 
+				pPer->altCorreta, 
+				pPer->alt [pPer->altCorreta - (int)'a']);
+		}
+	}
 
-	esperaEnter ();
-
-	free (pPer);
-	pPer = pegaPergunta (MEDIO, f);
-	printPergunta (*pPer, pergAtual++);
-
-	esperaEnter ();
-
-	free (pPer);
-	pPer = pegaPergunta (DIFICIL, f);
-	printPergunta (*pPer, pergAtual++);
-
-	esperaEnter ();
-	
-	free (pPer);
-	pPer = pegaPergunta (SUPER_DIFICIL, f);
-	printPergunta (*pPer, pergAtual++);
-
-	esperaEnter ();
-	
 	printf("\n\nFim de jogo!\n\n");
-
-	
 
 	fclose(f);
 	if (pPer) free (pPer);
