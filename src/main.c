@@ -6,7 +6,7 @@
 /*      TRABALHO PRÁTICO 2025.2: SHOW DO MILHÃO          */
 /*                                                       */
 /*      Alunos: Luan Rodolfo dos Santos Leme             */
-/*              Henrico ?? Queiroz                       */
+/*              Henrico Oliveira de Queiroz              */
 /*              Caio e Silva Barbieri                    */
 /*                                                       */
 /*                                                       */
@@ -25,18 +25,34 @@ int main (void)
 	
 	/* Variaveis do loop */
 	niveis niv;
+	recursos rec = {N_RECURSO, N_RECURSO, N_RECURSO, N_RECURSO};
 	char resp;
 
 	srand (time(NULL));
 
 	printf("\n\nOla, bem-vindo ao Show do Milhao!\n\n");
 
-	for (niv = MINIMO, resp = ','; niv <= MAXIMO; niv++)
+	for (niv = MINIMO, resp = ','; niv <= MAXIMO;)
 	{
 		pPer = pegaPergunta (niv, f);
-		printPergunta (*pPer, pergAtual++);
-		resp = esperaResposta ("abcd");
+		printPergunta (*pPer, pergAtual);
+		printAjuda (rec);
+		resp = esperaResposta ("abcd12345");
 		
+		if (resp >= '1' && resp <= '5') 
+		{
+			processaAjuda (&rec, resp, *pPer);
+
+			if (resp == '5') {
+				printf("\nVoce decidiu parar o jogo. Ate a proxima!\n");
+				exit (0);
+			}
+			
+			if(resp != '1'){
+				continue;
+			}
+		}
+
 		printf ("    Voce escolheu: (%c): %s\n", 
 				resp, 
 				pPer->alt [resp - (int)'a']);
@@ -49,6 +65,9 @@ int main (void)
 				pPer->altCorreta, 
 				pPer->alt [pPer->altCorreta - (int)'a']);
 		}
+
+		pergAtual++;
+		niv++;
 	}
 
 	printf("\n\nFim de jogo!\n\n");
