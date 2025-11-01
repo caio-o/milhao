@@ -17,8 +17,11 @@ void esperaEnter (void)
 #####################################\n\
 #  Pressione ENTER para continuar.  #\n\
 #####################################\n");
-	
+	fflush (stdin);
+
 	fgetc  (stdin);
+	fgetc  (stdin);
+	fflush (stdin);
 }
 
 int printPergunta (const pergunta perg, const int num)
@@ -46,6 +49,26 @@ int printAjuda (const recursos rec)
 [5] Parar\n\n", 
 
 	rec.pulosRest, rec.plateiaRest, rec.univRest, rec.cartasRest);
+}
+
+jogador* constroiJogador (const int pular,  const int ajCartas, 
+		          const int ajUni, const int ajPlat) {
+	jogador *pJog = (jogador*) malloc (sizeof (jogador));
+	if (pJog) {
+		pJog->premio        =  0;
+		pJog->acertos       =  0;
+
+		pJog->nPular         =  pular;
+		pJog->nAjudaCartas   =  ajCartas;
+		pJog->nAjudaUni      =  ajUni;
+		pJog->nAjudaPlateia  =  ajPlat;
+	}
+	else {
+		perror ("Erro de alocacao em constroiJogador");
+		exit (1);
+	}
+
+	return pJog;
 }
 
 size_t indiceAleatorio (int nivel)
@@ -76,7 +99,7 @@ pergunta* pegaPergunta (int nivel, FILE* fb) {
 	return perg;
 }
 
-char ajudas[4][100] = {
+const char ajudas[4][100] = {
     "Pular pergunta",
     "Pedir ajuda a plateia",
     "Pedir ajuda aos universitarios",
@@ -85,13 +108,23 @@ char ajudas[4][100] = {
 
 char lerResposta(void) {
 	char resp = '\0';
-	while(1){
+	int  respValida = 0;
+
+	do { // while ( !respValida );
 		printf("Digite sua resposta: ");
-		scanf(" %c", &resp);
-		if((resp >= 'a' && resp <= 'd') || (resp >= '1' && resp <= '5'))
-			break;
-		printf("Resposta invalida! Tente novamente.\n");
-	}
+		
+		resp = (char) fgetc (stdin);
+		fflush (stdin);
+		
+		respValida = NULL != strchr(ALTERNATIVAS, (int) resp);
+
+		if ( strchr(ALTERNATIVAS, resp) ) {
+			respValida = 1;
+		}
+		else {
+			printf("Resposta invalida! Tente novamente.\n");
+		}
+	} while ( !respValida );
 
 	
 	return resp;
@@ -184,4 +217,5 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
 
     printf("\n");
 }
+
 

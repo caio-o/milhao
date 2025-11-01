@@ -14,6 +14,8 @@
 
 #define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x-1))
 
+#define ALTERNATIVAS           "abcd12345"
+
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
  * FUNCOES IMPLEMENTADAS EM "milhao.c".
@@ -34,6 +36,15 @@ typedef struct
 	char alt[4][30];
 	char altCorreta;
 } pergunta;
+
+typedef struct {
+	int premio;
+	int acertos;
+	int nPular;
+	int nAjudaCartas;
+	int nAjudaUni;
+	int nAjudaPlateia;
+} jogador;
 
 typedef enum {
 	MINIMO         = 1,
@@ -58,6 +69,16 @@ typedef struct {
  */
 void esperaEnter (void);
 
+/*
+ * Constroi struct <jogador> com os valores fornecidos;
+ * retorna o jogador alocado dinamicamente; sai do programa
+ * com sinal (1) se houver erro de alocacao.
+ */
+jogador* constroiJogador (const int pular, 
+		          const int ajCartas, 
+		          const int ajUni, 
+                          const int ajPlat);
+
 /**
  *  Seleciona uma pergunta aleatória do nível dado.
  */
@@ -69,11 +90,12 @@ pergunta* pegaPergunta (int nivel, FILE* f);
  */
 int printPergunta (const pergunta perg, const int num);
 
-//void printAjuda(int q1, int q2, int q3, int q4);
-
 char lerResposta(void);
 int printAjuda (const recursos rec);
 
 void processaAjuda (recursos* rec, const char escolha, const pergunta perg);
 
+char lerResposta(void);
+
 #endif
+

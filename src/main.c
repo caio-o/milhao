@@ -52,22 +52,25 @@ int main (void)
 				continue;
 			}
 		}
-
-		printf ("    Voce escolheu: (%c): %s\n", 
-				resp, 
-				pPer->alt [resp - (int)'a']);
-		
-		if (resp == pPer->altCorreta) 
-			printf ("    A resposta está.... correta!\n");
 		else {
-			printf ("    A resposta está.... errada!\n\n");
-			printf ("    A resposta correta era (%c): %s\n", 
-				pPer->altCorreta, 
-				pPer->alt [pPer->altCorreta - (int)'a']);
-		}
+			printf ("    Voce escolheu: (%c): %s\n", 
+					resp, 
+					pPer->alt [resp - (int)'a']);
+		
+			if (resp == pPer->altCorreta) 
+				printf ("    A resposta está.... correta!\n");
+			else {
+				printf ("    A resposta está.... errada!\n\n");
+				printf ("    A resposta correta era (%c): %s\n", 
+					pPer->altCorreta, 
+					pPer->alt [pPer->altCorreta - ALTERNATIVAS[0]]);
+			}
 
-		pergAtual++;
-		niv++;
+				pergAtual++;
+				niv++;
+		}
+		esperaEnter();
+
 	}
 
 	printf("\n\nFim de jogo!\n\n");
