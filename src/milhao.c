@@ -15,8 +15,11 @@ void esperaEnter (void)
 #####################################\n\
 #  Pressione ENTER para continuar.  #\n\
 #####################################\n");
-	
+	fflush (stdin);
+
 	fgetc  (stdin);
+	fgetc  (stdin);
+	fflush (stdin);
 }
 
 int printPergunta (const pergunta perg, const int num)
@@ -60,6 +63,7 @@ pergunta* pegaPergunta (int nivel, FILE* fb) {
 	return perg;
 }
 
+/*
 char esperaResposta (const char* alternativas)
 {
 	char c;
@@ -71,3 +75,47 @@ char esperaResposta (const char* alternativas)
 
 	return c;
 }
+*/
+
+const char ajudas[4][100] = {
+    "Pular pergunta",
+    "Pedir ajuda a plateia",
+    "Pedir ajuda aos universitarios",
+    "Pedir ajuda as cartas"
+};
+
+void printAjuda(int q1, int q2, int q3, int q4) {
+	printf("-- Ajuda --\n");
+	if (q1) printf("[1] %s (%dx)\n", ajudas[0], q1);
+	if (q2) printf("[2] %s (%dx)\n", ajudas[1], q2);
+	if (q3) printf("[3] %s (%dx)\n", ajudas[2], q3);
+	if (q4) printf("[4] %s (%dx)\n", ajudas[3], q4);
+	printf("[5] Parar\n");
+	printf("-----------\n");
+}
+
+char lerResposta(void) {
+	char resp = '\0';
+	int  respValida = 0;
+
+	do { // while ( !respValida );
+		printf("Digite sua resposta: ");
+		
+		resp = (char) fgetc (stdin);
+		fflush (stdin);
+		
+		respValida = NULL != strchr(ALTERNATIVAS, (int) resp);
+
+		if ( strchr(ALTERNATIVAS, resp) ) {
+			respValida = 1;
+		}
+		else {
+			printf("Resposta invalida! Tente novamente.\n");
+		}
+	} while ( !respValida );
+
+	
+	return resp;
+}
+
+

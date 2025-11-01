@@ -14,6 +14,8 @@
 
 #define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x-1))
 
+#define ALTERNATIVAS           "abcd12345"
+
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
  * FUNCOES IMPLEMENTADAS EM "milhao.c".
@@ -62,6 +64,11 @@ pergunta* pegaPergunta (int nivel, FILE* f);
  */
 int printPergunta (const pergunta perg, const int num);
 
-char esperaResposta (const char* alternativas);
+//char esperaResposta (const char* alternativas);
+
+void printAjuda(int q1, int q2, int q3, int q4);
+
+char lerResposta(void);
 
 #endif
+

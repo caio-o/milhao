@@ -6,7 +6,7 @@
 /*      TRABALHO PRÁTICO 2025.2: SHOW DO MILHÃO          */
 /*                                                       */
 /*      Alunos: Luan Rodolfo dos Santos Leme             */
-/*              Henrico ?? Queiroz                       */
+/*              Henrico Oliveira de Queiroz              */
 /*              Caio e Silva Barbieri                    */
 /*                                                       */
 /*                                                       */
@@ -35,11 +35,9 @@ int main (void)
 	{
 		pPer = pegaPergunta (niv, f);
 		printPergunta (*pPer, pergAtual++);
-		resp = esperaResposta ("abcd");
-		
-		printf ("    Voce escolheu: (%c): %s\n", 
-				resp, 
-				pPer->alt [resp - (int)'a']);
+		printAjuda (3, 3, 3, 3);
+
+		resp = lerResposta();
 		
 		if (resp == pPer->altCorreta) 
 			printf ("    A resposta está.... correta!\n");
@@ -47,8 +45,10 @@ int main (void)
 			printf ("    A resposta está.... errada!\n\n");
 			printf ("    A resposta correta era (%c): %s\n", 
 				pPer->altCorreta, 
-				pPer->alt [pPer->altCorreta - (int)'a']);
+				pPer->alt [pPer->altCorreta - ALTERNATIVAS[0]]);
 		}
+
+		esperaEnter();
 	}
 
 	printf("\n\nFim de jogo!\n\n");
@@ -56,6 +56,5 @@ int main (void)
 	fclose(f);
 	if (pPer) free (pPer);
 
-	// comentário teste
 	return 0;
 }
