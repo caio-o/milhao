@@ -35,6 +35,25 @@ Pergunta %d: %s\n\
     num, perg.descricao, perg.alt[0], perg.alt[1], perg.alt[2], perg.alt[3]);
 }
 
+jogador* constroiJogador (const int pular,  const int ajCartas, 
+		          const int ajUni, const int ajPlat) {
+	jogador *pJog = (jogador*) malloc (sizeof (jogador));
+	if (pJog) {
+		pJog->premio        =  0;
+		pJog->acertos       =  0;
+
+		pJog->nPular         =  pular;
+		pJog->nAjudaCartas   =  ajCartas;
+		pJog->nAjudaUni      =  ajUni;
+		pJog->nAjudaPlateia  =  ajPlat;
+	}
+	else {
+		perror ("Erro de alocacao em constroiJogador");
+		exit (1);
+	}
+
+	return pJog;
+}
 size_t indiceAleatorio (int nivel)
 {	
 	return nivel == (int) SUPER_DIFICIL ?
