@@ -7,7 +7,7 @@
 
 #define N_PERGUNTAS_NIVEL       5
 #define N_PERGUNTAS_TOTAL      16
-#define N_RECURSO_PULAR         3
+#define N_RECURSO           	3
 #define N_PERGUNTAS_NIVEL_ARQ  20
 #define N_PERGUNTAS_SUPER_ARQ  10 
 #define N_PERGUNTAS_ARQ        70
@@ -46,6 +46,13 @@ typedef enum {
 	MAXIMO         = 4
 } niveis;
 
+typedef struct {
+	int pulosRest;
+	int plateiaRest;
+	int univRest;
+	int cartasRest;
+} recursos;
+
 /**
  *  Espera que o usuário termine a linha antes de continuar.
  */
@@ -62,8 +69,11 @@ pergunta* pegaPergunta (int nivel, FILE* f);
  */
 int printPergunta (const pergunta perg, const int num);
 
-void printAjuda(int q1, int q2, int q3, int q4);
+//void printAjuda(int q1, int q2, int q3, int q4);
 
 char lerResposta(void);
+int printAjuda (const recursos rec);
+
+void processaAjuda (recursos* rec, const char escolha, const pergunta perg);
 
 #endif
