@@ -35,42 +35,53 @@ int main (void)
 	for (niv = MINIMO, resp = ','; niv <= MAXIMO;)
 	{
 		pPer = pegaPergunta (niv, f);
-		printPergunta (*pPer, pergAtual);
-		printAjuda (rec);
-		resp = lerResposta();
-		
-		if (resp >= '1' && resp <= '5') 
+		while (1)
 		{
-			processaAjuda (&rec, resp, *pPer);
-
-			if (resp == '5') {
-				printf("\nVoce decidiu parar o jogo. Ate a proxima!\n");
-				exit (0);
-			}
 			
-			if(resp != '1'){
-				continue;
+			printPergunta (*pPer, pergAtual);
+			printAjuda (rec);
+			resp = lerResposta();
+			
+			if (resp >= '1' && resp <= '5') 
+			{
+				processaAjuda (&rec, resp, *pPer);
+	
+				if (resp == '5') {
+					printf("\nVoce decidiu parar o jogo. Ate a proxima!\n");
+					exit (0);
+				}
+				
+				if(resp == '1'){
+					break;
+				}
 			}
-		}
-		else {
-			printf ("    Voce escolheu: (%c): %s\n", 
-					resp, 
-					pPer->alt [resp - (int)'a']);
-		
-			if (resp == pPer->altCorreta) 
-				printf ("    A resposta está.... correta!\n");
 			else {
-				printf ("    A resposta está.... errada!\n\n");
-				printf ("    A resposta correta era (%c): %s\n", 
-					pPer->altCorreta, 
-					pPer->alt [pPer->altCorreta - ALTERNATIVAS[0]]);
+				printf ("    Voce escolheu: (%c): %s\n", 
+						resp, 
+						pPer->alt [resp - (int)'a']);
+			
+				if (resp == pPer->altCorreta) 
+					printf ("    A resposta esta.... correta!\n");
+				else {
+					printf ("    A resposta esta.... errada!\n\n");
+					printf ("    A resposta correta era (%c): %s\n", 
+						pPer->altCorreta, 
+						pPer->alt [pPer->altCorreta - ALTERNATIVAS[0]]);
+				}
+				
+				break;
 			}
-
-				pergAtual++;
-				niv++;
+	
 		}
+
+		pergAtual++;
+		niv++;
 		esperaEnter();
 
+		if (pPer) {
+			free (pPer);
+			pPer = NULL;
+		}
 	}
 
 	printf("\n\nFim de jogo!\n\n");
