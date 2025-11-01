@@ -37,15 +37,6 @@ typedef struct
 	char altCorreta;
 } pergunta;
 
-typedef struct {
-	int premio;
-	int acertos;
-	int nPular;
-	int nAjudaCartas;
-	int nAjudaUni;
-	int nAjudaPlateia;
-} jogador;
-
 typedef enum {
 	MINIMO         = 1,
 
@@ -64,6 +55,13 @@ typedef struct {
 	int cartasRest;
 } recursos;
 
+typedef struct {
+	int premio;
+	int acertos;
+
+	recursos rec;
+} jogador;
+
 /**
  *  Espera que o usuário termine a linha antes de continuar.
  */
@@ -74,10 +72,8 @@ void esperaEnter (void);
  * retorna o jogador alocado dinamicamente; sai do programa
  * com sinal (1) se houver erro de alocacao.
  */
-jogador* constroiJogador (const int pular, 
-		          const int ajCartas, 
-		          const int ajUni, 
-                          const int ajPlat);
+jogador* constroiJogador (const int pulos,  const int cartas, 
+		          const int univ,   const int plateia);
 
 /**
  *  Seleciona uma pergunta aleatória do nível dado.

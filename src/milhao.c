@@ -51,17 +51,18 @@ int printAjuda (const recursos rec)
 	rec.pulosRest, rec.plateiaRest, rec.univRest, rec.cartasRest);
 }
 
-jogador* constroiJogador (const int pular,  const int ajCartas, 
-		          const int ajUni, const int ajPlat) {
+jogador* constroiJogador (const int pulos,  const int cartas, 
+		          const int univ,   const int plateia) {
 	jogador *pJog = (jogador*) malloc (sizeof (jogador));
+	
 	if (pJog) {
-		pJog->premio        =  0;
-		pJog->acertos       =  0;
+		pJog->premio           =  0;
+		pJog->acertos          =  0;
 
-		pJog->nPular         =  pular;
-		pJog->nAjudaCartas   =  ajCartas;
-		pJog->nAjudaUni      =  ajUni;
-		pJog->nAjudaPlateia  =  ajPlat;
+		pJog->rec.pulosRest    =  pulos;
+		pJog->rec.plateiaRest  =  cartas;
+		pJog->rec.univRest     =  univ;
+		pJog->rec.cartasRest   =  plateia;
 	}
 	else {
 		perror ("Erro de alocacao em constroiJogador");
