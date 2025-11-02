@@ -58,6 +58,8 @@ jogador* constroiJogador (const int pulos,  const int cartas,
 	if (pJog) {
 		pJog->premio           =  0;
 		pJog->acertos          =  0;
+		pJog->venceu           =  0;
+		pJog->errou            =  0;
 
 		pJog->rec.pulosRest    =  pulos;
 		pJog->rec.plateiaRest  =  cartas;

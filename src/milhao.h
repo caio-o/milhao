@@ -21,6 +21,8 @@
  * FUNCOES IMPLEMENTADAS EM "milhao.c".
  */
 
+/* TIPOS, STRUCTS, ENUMS, CONSTANTES */
+
 /**
  *  Pergunta que pode ser feita ao jogador.
  *
@@ -58,9 +60,14 @@ typedef struct {
 typedef struct {
 	int premio;
 	int acertos;
+	int errou;
+	int venceu;
 
 	recursos rec;
 } jogador;
+
+
+/* FUNÇÕES */
 
 /**
  *  Espera que o usuário termine a linha antes de continuar.
