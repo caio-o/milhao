@@ -4,6 +4,8 @@
 
 typedef jogador resultado;
 
+void boasVindas (void);
+
 /* Executa o jogo com os recursos iniciais e o arquivo de perguntas fornecido. */
 resultado executa (const recursos rec, FILE *fPerguntas);
 

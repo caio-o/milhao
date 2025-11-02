@@ -15,6 +15,7 @@
 #define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x-1))
 
 #define ALTERNATIVAS           "abcd12345"
+#define ALTERNATIVAS_AJUDA     "12345"
 
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
@@ -50,6 +51,14 @@ typedef enum {
 	MAXIMO         = 4
 } niveis;
 
+typedef enum {
+	JOGANDO    =  0,
+	FINAL, 
+	VENCEU,
+	ERROU,
+	PAROU
+} estados;
+
 typedef struct {
 	int pulosRest;
 	int plateiaRest;
@@ -60,8 +69,8 @@ typedef struct {
 typedef struct {
 	int premio;
 	int acertos;
-	int errou;
-	int venceu;
+
+	estados estado;
 
 	recursos rec;
 } jogador;
