@@ -16,14 +16,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include "milhao.h"
+#include "executa.h"
 
 int main (void)
 {
+	/*
 	FILE *f = fopen("assets/perguntas.dat", "r");
 	pergunta* pPer = NULL;
 	int pergAtual = 1;
 	
-	/* Variaveis do loop */
+	// Variaveis do loop 
+	
 	niveis niv;
 	recursos rec = {N_RECURSO, N_RECURSO, N_RECURSO, N_RECURSO};
 	char resp;
@@ -88,6 +91,22 @@ int main (void)
 
 	fclose(f);
 	if (pPer) free (pPer);
+	*/
+	recursos rec = {3, 3, 3, 3};
+	int retorno = 0;
+	FILE *f = fopen ("./assets/perguntas.dat", "rb");
+	resultado res = {0, 0, JOGANDO, rec};
 
-	return 0;
+	srand (time(NULL));
+
+	if (f) {
+		res = executa (rec, f);
+		mostraResultado (res);
+	}
+	else {
+		perror ("Nao se pode abrir arquivo");
+		retorno = 1;	
+	}
+
+	return retorno;
 }
