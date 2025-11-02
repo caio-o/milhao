@@ -20,7 +20,6 @@ void esperaEnter (void)
 	fflush (stdin);
 
 	fgetc  (stdin);
-	fgetc  (stdin);
 	fflush (stdin);
 }
 
@@ -60,9 +59,9 @@ jogador* constroiJogador (const int pulos,  const int cartas,
 		pJog->acertos          =  0;
 
 		pJog->rec.pulosRest    =  pulos;
-		pJog->rec.plateiaRest  =  cartas;
+		pJog->rec.plateiaRest  =  plateia;
 		pJog->rec.univRest     =  univ;
-		pJog->rec.cartasRest   =  plateia;
+		pJog->rec.cartasRest   =  cartas;
 	}
 	else {
 		perror ("Erro de alocacao em constroiJogador");
@@ -133,26 +132,25 @@ char lerResposta(void) {
 
 void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
 {
-    srand(time(NULL)); // garantir aleatoriedade
 
     switch (escolha) {
         case '1': // Pular pergunta
             if (rec->pulosRest > 0) {
                 rec->pulosRest--;
-                printf("\nVocê decidiu pular a pergunta!\n");
+                printf("\nVoce decidiu pular a pergunta!\n");
                 printf("A resposta correta era (%c): %s\n",
                        perg.altCorreta,
                        perg.alt[perg.altCorreta - 'a']);
                 printf("Restam %d pulos.\n", rec->pulosRest);
             } else {
-                printf("\nVocê não tem mais pulos disponíveis!\n");
+                printf("\nVoce nao tem mais pulos disponiveis!\n");
             }
             break;
 
         case '2': { // Plateia
             if (rec->plateiaRest > 0) {
                 rec->plateiaRest--;
-                printf("\nVocê pediu ajuda à plateia!\n");
+                printf("\nVoce pediu ajuda a plateia!\n");
                 int votos[4] = {0}, i;
                 // 30 votos, com chance maior da correta
                 for (i = 0; i < 30; i++) {
@@ -165,7 +163,7 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
                     printf("(%c): %d votos\n", 'a' + i, votos[i]);
                 printf("Restam %d ajudas da plateia.\n", rec->plateiaRest);
             } else {
-                printf("\nVocê não tem mais ajudas da plateia!\n");
+                printf("\nVoce não tem mais ajudas da plateia!\n");
             }
             break;
         }
@@ -173,19 +171,19 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
         case '3': { // Universitários
             if (rec->univRest > 0) {
                 rec->univRest--;
-                printf("\nVocê pediu ajuda aos universitários!\n");
+                printf("\nVoce pediu ajuda aos universitarios!\n");
                 for (int i = 1; i <= 3; i++) {
                     char palpite;
                     if (rand() % 100 < 70)
                         palpite = perg.altCorreta; // 70% de chance de acerto
                     else
                         palpite = 'a' + rand() % 4;
-                    printf("Universitário %d acha que é (%c): %s\n",
+                    printf("Universitario %d acha que eh (%c): %s\n",
                            i, palpite, perg.alt[palpite - 'a']);
                 }
-                printf("Restam %d ajudas dos universitários.\n", rec->univRest);
+                printf("Restam %d ajudas dos universitarios.\n", rec->univRest);
             } else {
-                printf("\nVocê não tem mais ajudas dos universitários!\n");
+                printf("\nVoce não tem mais ajudas dos universitarios!\n");
             }
             break;
         }
@@ -193,9 +191,9 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
         case '4': { // Cartas
             if (rec->cartasRest > 0) {
                 rec->cartasRest--;
-                printf("\nVocê pediu ajuda das cartas!\n");
+                printf("\nVoce pediu ajuda das cartas!\n");
                 int carta = rand() % 4; // número de alternativas erradas removidas
-                printf("Você tirou a carta número %d!\n", carta);
+                printf("Voce tirou a carta numero %d!\n", carta);
 
                 int removidas = 0;
                 for (int i = 0; i < 4 && removidas < carta; i++) {
@@ -207,7 +205,7 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
                 }
                 printf("Restam %d ajudas das cartas.\n", rec->cartasRest);
             } else {
-                printf("\nVocê não tem mais ajudas das cartas!\n");
+                printf("\nVoce não tem mais ajudas das cartas!\n");
             }
             break;
         }
