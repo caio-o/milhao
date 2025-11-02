@@ -10,22 +10,30 @@
  *
  */
 
+int limpaStdin (void) {
+	int c;
+	do {
+		c = fgetc (stdin);
+	} while (c != '\n' && c != EOF);
+	return c;
+}
+
 void esperaEnter (void)
 {
 	printf (
 "\n\
 #####################################\n\
 #  Pressione ENTER para continuar.  #\n\
-#####################################\n");
-	fflush (stdin);
+#####################################\n....");
+	
+	fflush (stdout);
 
-	fgetc  (stdin);
-	fflush (stdin);
+	limpaStdin ();
 }
 
 int printPergunta (const pergunta perg, const int num)
 {
-	return printf("\
+	printf("\
 \n\
 Pergunta %d: %s\n\
     [a] %s\n\
@@ -34,11 +42,14 @@ Pergunta %d: %s\n\
     [d] %s\n\n", 
 
     num, perg.descricao, perg.alt[0], perg.alt[1], perg.alt[2], perg.alt[3]);
+
+	fflush (stdout);
+	return 0;
 }
 
 int printAjuda (const recursos rec)
 {
-	return printf("\
+	printf("\
 \n\
 -- Ajuda --:\n\
 [1] Pular pergunta (%dx)\n\
@@ -48,6 +59,10 @@ int printAjuda (const recursos rec)
 [5] Parar\n\n", 
 
 	rec.pulosRest, rec.plateiaRest, rec.univRest, rec.cartasRest);
+
+	fflush (stdout);
+
+	return 0;
 }
 
 jogador* constroiJogador (const int pulos,  const int cartas, 
@@ -113,10 +128,13 @@ char lerResposta(void) {
 	int  respValida = 0;
 
 	do { // while ( !respValida );
+		/* Uma resposta válida não foi lida ainda. */
 		printf("Digite sua resposta: ");
+		fflush(stdout);
 		
 		resp = (char) fgetc (stdin);
-		fflush (stdin);
+
+		//fflush (stdin); // comportamento indefinido?
 		
 		respValida = NULL != strchr(ALTERNATIVAS, (int) resp);
 
@@ -125,9 +143,11 @@ char lerResposta(void) {
 		}
 		else {
 			printf("Resposta invalida! Tente novamente.\n");
+			fflush(stdout);
 		}
 	} while ( !respValida );
-
+	
+	limpaStdin();
 	
 	return resp;
 }
