@@ -66,6 +66,9 @@ typedef struct {
  */
 void esperaEnter (void);
 
+/* Limpa a tela imprimindo novas linhas. */
+void limpaTela (void);
+
 /**
  *  Retorna uma pergunta aleatória do nível dado.
  */

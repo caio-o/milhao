@@ -18,6 +18,16 @@ int limpaStdin (void) {
 	return c;
 }
 
+void limpaTela (void) {
+#if defined (__POSIX__)
+	system ("clear");
+#elif defined (WIN32) || defined (_WIN32)
+	system ("cls");
+#else
+	printf ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+#endif
+}
+
 void esperaEnter (void)
 {
 	printf (
