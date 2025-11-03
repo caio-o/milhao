@@ -36,5 +36,6 @@ int main (void)
 		retorno = 1;	
 	}
 
+	esperaEnter ();
 	return retorno;
 }
