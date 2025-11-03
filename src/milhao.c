@@ -30,7 +30,7 @@ void executaEtapa (jogador* pJog, FILE *fPerg) {
 	static pergunta perg  =  {'\0', " ", {" "," "," "," "}, '\0'};
 	static char resp      =  '\0';
 	static niveis niv     =  FACIL;
-	static int valorPerg  =  10000;
+	static int valorPerg  =  1000;
 
 	limpaTela();
 
