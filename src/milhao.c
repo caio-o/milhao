@@ -32,6 +32,8 @@ void executaEtapa (jogador* pJog, FILE *fPerg) {
 	static niveis niv     =  FACIL;
 	static int valorPerg  =  10000;
 
+	limpaTela();
+
 	atualizaPergunta (niv, fPerg, &perg);
 	printPergunta (perg, pJog->acertos + 1);
 	printAjuda (pJog->rec);

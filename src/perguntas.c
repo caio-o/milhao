@@ -26,6 +26,8 @@ void limpaTela (void) {
 #else
 	printf ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 #endif
+
+	fflush (stdout);
 }
 
 void esperaEnter (void)
