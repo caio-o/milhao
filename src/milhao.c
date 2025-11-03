@@ -41,6 +41,7 @@ void executaEtapa (jogador* pJog, FILE *fPerg) {
 	resp = lerResposta();
 
 	while (strchr (ALTERNATIVAS_AJUDA, resp)) {
+		/* O caracter "resp" corresponde a uma opção de ajuda. */
 		processaAjuda (&(pJog->rec), resp, perg);
 
 		if (resp == '1' && (pJog->rec.pulosRest >= 1)) {
@@ -124,7 +125,8 @@ resultado executa (const recursos rec, FILE *fPerguntas) {
 	
 	boasVindas();
 
-	do     executaEtapa (&jog, fPerguntas);
+	do     	/* O jogador nem ganhou, nem perdeu, nem parou o jogo. */
+		executaEtapa (&jog, fPerguntas);
 	while  (jog.estado == JOGANDO);
 
 	return jog;

@@ -12,7 +12,9 @@
 
 int limpaStdin (void) {
 	int c;
-	do {
+	do { 
+		/* "c" é um caracter da stream de input, a qual não está vazia,
+		nem atingiu ainda uma quebra de linha. */
 		c = fgetc (stdin);
 	} while (c != '\n' && c != EOF);
 	return c;
@@ -74,8 +76,9 @@ size_t indiceAleatorioNovo (int nivel)
 
 	if (cont >= N_PERGUNTAS_MAX) 
 		ind = -1;
-	else { 
-		do    ind = indiceAleatorio (nivel);	
+	else {
+		do  
+			ind = indiceAleatorio (nivel);	
 		while (perguntaFeita[ind]); 
 		// ^ Enquanto "ind" não é índice de uma pergunta nova.
 		
@@ -116,7 +119,7 @@ char lerResposta(void) {
 	int  respValida = 0;
 
 	do { // while ( !respValida );
-		/* Uma resposta válida não foi lida ainda. */
+		/* Caracter "resp" ainda não é uma resposta válida. */
 		printf("Digite sua resposta: ");
 		fflush(stdout);
 		
@@ -273,6 +276,7 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
     }
 
     printf("\n");
+    fflush (stdout);
 }
 
 
