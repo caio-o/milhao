@@ -22,9 +22,9 @@ void esperaEnter (void)
 {
 	printf (
 "\n\
-#####################################\n\
-#  Pressione ENTER para continuar.  #\n\
-#####################################\n....");
+    #####################################\n\
+    #  Pressione ENTER para continuar.  #\n\
+    #####################################\n    ....");
 	
 	fflush (stdout);
 
@@ -95,23 +95,47 @@ size_t indiceAleatorio (int nivel)
 		IND_NIVEL (nivel) + random() % N_PERGUNTAS_NIVEL_ARQ;
 }
 
-pergunta* pegaPergunta (int nivel, FILE* fb) {
-	pergunta *perg = (pergunta*) malloc (sizeof (pergunta));
+size_t indiceAleatorioNovo (int nivel)
+{	
+	static unsigned short perguntaFeita [N_PERGUNTAS_MAX] = {0};
+	static int cont = 0;
+	static int ind = -1;
+
+	if (cont >= N_PERGUNTAS_MAX) 
+		ind = -1;
+	else { 
+		do    ind = indiceAleatorio (nivel);	
+		while (perguntaFeita[ind]); 
+		// ^ Enquanto "ind" não é índice de uma pergunta nova.
+		
+		perguntaFeita[ind] = 1;
+		cont++;
+	}
+	
+	return ind;
+}
+
+void atualizaPergunta (int nivel, FILE* fb, pergunta *pPerg) {
+	size_t ind;
 
 	if (nivel > (int) MAXIMO)
 		nivel = MAXIMO;
 	if (nivel < (int) MINIMO)
 		nivel = (int) MINIMO;
 
-	if (perg) {			
-		fseek (fb, indiceAleatorio (nivel) * sizeof(pergunta), SEEK_SET);
-		fread (perg, sizeof (pergunta), 1, fb);
+	if ((ind = indiceAleatorioNovo (nivel)) != -1) {
+		fseek (fb, ind * sizeof(pergunta), SEEK_SET);
+		if (!fread (pPerg, sizeof (pergunta), 1, fb)) {
+			perror ("pegaPergunta: Erro ao ler arquivo");
+			exit (1);
+		}
 	}
+}
 
-	else {
-		perror ("pegaPergunta: erro de alocacao");
-		exit (1);
-	}	
+pergunta* pegaPergunta (int nivel, FILE* fb) {
+	pergunta *perg = (pergunta*) malloc (sizeof (pergunta));
+
+	atualizaPergunta (nivel, fb, perg);
 	
 	return perg;
 }
@@ -159,13 +183,13 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
         case '1': // Pular pergunta
             if (rec->pulosRest > 0) {
                 rec->pulosRest--;
-                printf("\nVoce decidiu pular a pergunta!\n");
-                printf("A resposta correta era (%c): %s\n",
+                printf("\n    Voce decidiu pular a pergunta!\n");
+                printf("    A resposta correta era (%c): %s\n",
                        perg.altCorreta,
                        perg.alt[perg.altCorreta - 'a']);
-                printf("Restam %d pulos.\n", rec->pulosRest);
+                printf("    Restam %d pulos.\n", rec->pulosRest);
             } else {
-                printf("\nVoce nao tem mais pulos disponiveis!\n");
+                printf("\n    Voce nao tem mais pulos disponiveis!\n");
             }
             break;
 
@@ -180,12 +204,12 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
                                                      : 'a' + rand() % 4;
                     votos[opcao - 'a']++;
                 }
-                printf("Resultado da plateia:\n");
+                printf("    Resultado da plateia:\n");
                 for (i = 0; i < 4; i++)
-                    printf("(%c): %d votos\n", 'a' + i, votos[i]);
-                printf("Restam %d ajudas da plateia.\n", rec->plateiaRest);
+                    printf("    (%c): %d votos\n", 'a' + i, votos[i]);
+                printf("    Restam %d ajudas da plateia.\n", rec->plateiaRest);
             } else {
-                printf("\nVoce não tem mais ajudas da plateia!\n");
+                printf("\n    Voce não tem mais ajudas da plateia!\n");
             }
             break;
         }
@@ -193,19 +217,19 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
         case '3': { // Universitários
             if (rec->univRest > 0) {
                 rec->univRest--;
-                printf("\nVoce pediu ajuda aos universitarios!\n");
+                printf("\n    Voce pediu ajuda aos universitarios!\n");
                 for (int i = 1; i <= 3; i++) {
                     char palpite;
                     if (rand() % 100 < 70)
                         palpite = perg.altCorreta; // 70% de chance de acerto
                     else
                         palpite = 'a' + rand() % 4;
-                    printf("Universitario %d acha que eh (%c): %s\n",
+                    printf("    Universitario %d acha que eh (%c): %s\n",
                            i, palpite, perg.alt[palpite - 'a']);
                 }
-                printf("Restam %d ajudas dos universitarios.\n", rec->univRest);
+                printf("    Restam %d ajudas dos universitarios.\n", rec->univRest);
             } else {
-                printf("\nVoce não tem mais ajudas dos universitarios!\n");
+                printf("\n    Voce não tem mais ajudas dos universitarios!\n");
             }
             break;
         }
@@ -213,21 +237,21 @@ void processaAjuda(recursos* rec, const char escolha, const pergunta perg)
         case '4': { // Cartas
             if (rec->cartasRest > 0) {
                 rec->cartasRest--;
-                printf("\nVoce pediu ajuda das cartas!\n");
+                printf("\n    Voce pediu ajuda das cartas!\n");
                 int carta = rand() % 4; // número de alternativas erradas removidas
-                printf("Voce tirou a carta numero %d!\n", carta);
+                printf("    Voce tirou a carta numero %d!\n", carta);
 
                 int removidas = 0;
                 for (int i = 0; i < 4 && removidas < carta; i++) {
                     if ('a' + i != perg.altCorreta) {
-                        printf("Alternativa (%c) eliminada: %s\n",
+                        printf("    Alternativa (%c) eliminada: %s\n",
                                'a' + i, perg.alt[i]);
                         removidas++;
                     }
                 }
-                printf("Restam %d ajudas das cartas.\n", rec->cartasRest);
+                printf("    Restam %d ajudas das cartas.\n", rec->cartasRest);
             } else {
-                printf("\nVoce não tem mais ajudas das cartas!\n");
+                printf("\n    Voce não tem mais ajudas das cartas!\n");
             }
             break;
         }

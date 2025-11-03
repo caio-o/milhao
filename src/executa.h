@@ -12,4 +12,10 @@ resultado executa (const recursos rec, FILE *fPerguntas);
 /* Mostra resultado do jogo. */
 void mostraResultado (resultado res);
 
+void executaEtapa (jogador* pJog, FILE *fPerg);
+
+void mensagemNivel (niveis niv);
+
+int processaResposta (const char r, const pergunta perg); 
 #endif
+

@@ -11,11 +11,12 @@
 #define N_PERGUNTAS_NIVEL_ARQ  20
 #define N_PERGUNTAS_SUPER_ARQ  10 
 #define N_PERGUNTAS_ARQ        70
+#define N_PERGUNTAS_MAX        N_PERGUNTAS_ARQ
 
 #define IND_NIVEL(x)            (N_PERGUNTAS_NIVEL_ARQ * (x-1))
 
 #define ALTERNATIVAS           "abcd12345"
-#define ALTERNATIVAS_AJUDA     "12345"
+#define ALTERNATIVAS_AJUDA     "1234"
 
 /**
  *  DECLARACAO E COMENTARIO DAS FUNCOES DO JOGO DO MILHAO.
@@ -92,9 +93,16 @@ jogador* constroiJogador (const int pulos,  const int cartas,
 		          const int univ,   const int plateia);
 
 /**
- *  Seleciona uma pergunta aleatória do nível dado.
+ *  Retorna uma pergunta aleatória do nível dado.
  */
 pergunta* pegaPergunta (int nivel, FILE* f);
+
+/**
+ *  Atualiza "pPerg" para uma nova pergunta do nivel "nivel",
+ *  a partir do arquivo "fb". Garante uma pergunta diferente a cada vez.
+ *  Caso todas tenham sido usadas, não atualiza.
+ */
+void atualizaPergunta (int nivel, FILE* fb, pergunta *pPerg);
 
 /**
  *  Imprime pergunta no console. Retorna o numero de caracteres

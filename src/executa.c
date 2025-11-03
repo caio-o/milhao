@@ -1,7 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include "executa.h"
 #include "milhao.h"
+
+void executaEtapa (jogador* pJog, FILE *fPerg) {
+	static pergunta perg  =  {'\0', " ", {" "," "," "," "}, '\0'};
+	static char resp      =  '\0';
+	static niveis niv     =  FACIL;
+	static int valorPerg  =  10000;
+
+	atualizaPergunta (niv, fPerg, &perg);
+	printPergunta (perg, pJog->acertos + 1);
+	printAjuda (pJog->rec);
+
+	resp = lerResposta();
+
+	while (strchr (ALTERNATIVAS_AJUDA, resp)) {
+		processaAjuda (&(pJog->rec), resp, perg);
+
+		if (resp == '1' && (pJog->rec.pulosRest >= 1)) {
+			atualizaPergunta  (niv, fPerg, &perg);
+			printPergunta     (perg, pJog->acertos + 1);
+			printAjuda        (pJog->rec);
+		}
+
+		resp = lerResposta();
+	}
+	
+	if (resp == '5') {
+		printf ("\n\n\n"
+		        "    Voce decidiu PARAR  O  JOGO E VOLTAR PARA CASA!\n\n"
+		        "\n\n\n");
+		pJog->estado = PAROU;
+	}
+
+	else if (processaResposta (resp, perg) == 1) { 
+		(pJog->premio) += valorPerg;
+		(pJog->acertos)++;
+			
+		printf ("    Voce GANHOU R$ %d,00!\n\n", valorPerg);
+		
+		if (niv == SUPER_DIFICIL)
+			pJog->estado = VENCEU;
+		else if ((pJog->acertos) >= 5 * niv) {
+			valorPerg *= 10;
+			niv++;
+			mensagemNivel (niv);
+		}
+	}
+
+	else {
+		pJog->estado = ERROU;
+		pJog->premio = 0;
+	}
+
+	esperaEnter();
+}
 
 void mensagemNivel (niveis niv) {
 	        /***               TAMANHO * DE LINHA            ***/
@@ -21,6 +76,8 @@ void mensagemNivel (niveis niv) {
 		printf ("              +<<<( SUPER DIFICIL! )>>>+\n\n");
 		break;
 	}
+
+	fflush (stdout);
 }
 
 void boasVindas (void) {
@@ -36,59 +93,35 @@ void boasVindas (void) {
 	esperaEnter ();
 }
 
-resultado executa (const recursos rec, FILE *fPerguntas) {
-	jogador    jog        =  {0, 0, JOGANDO, rec};
-	pergunta*  pPerg      =  NULL;
-	int        valorPerg  =  10000;
-	char       resp       =  '\0';
-	niveis     niv        =  FACIL;
+int processaResposta (const char r, const pergunta perg) {
+	int acertou = r == perg.altCorreta;
+	
+	if (acertou) {
+		printf ("    Voce escolheu (%c): %s\n"
+		        "    A resposta esta.... CORRETA!\n",
+			r, perg.alt [r - 'a']);
+		
+	}
+	else {
+		printf ("    Voce escolheu (%c): %s\n"
+			"    A resposta esta.... ERRADA!!\n"
+		        "    A resposta correta era (%c): %s.\n",
+			r, perg.alt [r - 'a'], 
+			perg.altCorreta, perg.alt [perg.altCorreta - 'a']);
+		
+	}
 
+	fflush (stdout);
+	return acertou;
+}
+
+resultado executa (const recursos rec, FILE *fPerguntas) {
+	jogador jog = {0, 0, JOGANDO, rec};
+	
 	boasVindas();
 
-	do {
-		pPerg = pegaPergunta (niv, fPerguntas);
-		printPergunta (*pPerg, jog.acertos + 1);
-
-		resp = lerResposta();
-
-		if (strchr (ALTERNATIVAS_AJUDA, resp)) {
-			processaAjuda (&(jog.rec), resp, *pPerg);
-		}
-
-		if (resp == '5') {
-			printf ("\n\n\n"
-			        "    Voce decidiu PARAR  O  JOGO E VOLTAR PARA CASA!\n\n"
-			        "\n\n\n");
-			jog.estado = PAROU;
-		}
-
-		else if (resp == pPerg->altCorreta) { 
-			printf ("    Voce escolheu (%c)!\n"
-			        "    A resposta esta.... CORRETA!\n"
-				" Voce GANHOU R$ %d,00!\n\n", 
-			        resp, valorPerg);
-			
-			jog.acertos++;
-			if (jog.acertos != 5 * niv && jog.acertos % (5*niv) == 0) {
-				niv++;
-				mensagemNivel (niv);
-				if (niv == SUPER_DIFICIL)
-					jog.estado = FINAL;
-			}
-		}
-
-		else {
-			jog.estado = ERROU;
-		}
-
-		if (pPerg)
-			free (pPerg);
-	} while (jog.estado == JOGANDO);
-
-	// TODO : IMPLEMENTAR NÍVEL SUPER DIFÍCIL
-	if (jog.estado == FINAL) {
-
-	}
+	do     executaEtapa (&jog, fPerguntas);
+	while  (jog.estado == JOGANDO);
 
 	return jog;
 }
@@ -110,6 +143,7 @@ void mostraResultado (resultado res) {
 	case PAROU:
 		printf("    PARABENS! Apesar de nao chegar ao milhao,\n"
 		       "       voce voltou para casa com R$ %d,00!\n\n\n",
+
 		       res.premio);
 	default:
 		break;
@@ -132,5 +166,4 @@ void mostraResultado (resultado res) {
 
 	fflush (stdout);
 }
-
 
