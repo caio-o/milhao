@@ -68,6 +68,7 @@ void executaEtapa (jogador* pJog, FILE *fPerg) {
 		if (niv == SUPER_DIFICIL)
 			pJog->estado = VENCEU;
 		else if ((pJog->acertos) >= 5 * niv) {
+			pJog->premio = valorPerg;
 			valorPerg *= 10;
 			niv++;
 			mensagemNivel (niv);
@@ -130,7 +131,7 @@ resultado executa (const recursos rec, FILE *fPerguntas) {
 }
 
 void mostraResultado (resultado res) {
-	printf ("\n\n\n\n\n\n");
+	limpaTela();
 
 	switch (res.estado) {
 	case VENCEU:

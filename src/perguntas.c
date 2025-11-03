@@ -145,15 +145,15 @@ int processaResposta (const char r, const pergunta perg) {
 	int acertou = r == perg.altCorreta;
 	
 	if (acertou) {
-		printf ("    Voce escolheu (%c): %s\n"
-		        "    A resposta esta.... CORRETA!\n",
+		printf ("\n    Voce escolheu (%c): %s\n"
+		        "    A resposta esta.... CORRETA!\n\n\n",
 			r, perg.alt [r - 'a']);
 		
 	}
 	else {
-		printf ("    Voce escolheu (%c): %s\n"
-			"    A resposta esta.... ERRADA!!\n"
-		        "    A resposta correta era (%c): %s.\n",
+		printf ("\n    Voce escolheu (%c): %s\n"
+			"    A resposta esta.... ERRADA!!\n\n"
+		        "    A resposta correta era (%c): %s.\n\n\n",
 			r, perg.alt [r - 'a'], 
 			perg.altCorreta, perg.alt [perg.altCorreta - 'a']);
 		
