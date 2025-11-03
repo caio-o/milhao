@@ -61,38 +61,46 @@ typedef struct {
 
 /* FUNÇÕES */
 
-/**
- *  Espera que o usuário termine a linha antes de continuar.
- */
+/* Espera que o usuário termine a linha antes de continuar. */
 void esperaEnter (void);
 
 /* Limpa a tela imprimindo novas linhas. */
 void limpaTela (void);
 
-/**
- *  Retorna uma pergunta aleatória do nível dado.
- */
+/* Retorna uma pergunta aleatória do nível dado. */
 pergunta* pegaPergunta (int nivel, FILE* f);
 
-/**
- *  Atualiza "pPerg" para uma nova pergunta do nivel "nivel",
+/*  Atualiza "pPerg" para uma nova pergunta do nivel "nivel",
  *  a partir do arquivo "fb". Garante uma pergunta diferente a cada vez.
- *  Caso todas tenham sido usadas, não atualiza.
- */
+ *  Caso todas tenham sido usadas, não atualiza. */
 void atualizaPergunta (int nivel, FILE* fb, pergunta *pPerg);
 
-/**
- *  Imprime pergunta no console. Retorna o numero de caracteres
- * impressos ou numero negativo em caso de erro.
- */
+/* Imprime pergunta no console. Retorna o numero de caracteres impressos ou 
+ * numero negativo em caso de erro. 
+ *
+ * OBS.: Possui retorno pois se planejava usá-lo no tratamento de erros. */
 int printPergunta (const pergunta perg, const int num);
 
+/* Lê a resposta do jogador, garantindo que seja um caracter contido em 
+ * "ALTERNATIVAS". Retorna esse caracter. */
 char lerResposta(void);
-char lerResposta(void);
+
+/* Recebe um caracter 'r', e verifica se ele é a resposta da pergunta "perg".
+ * Retorna 1 se a resposta é a correta, ou 0 caso contrário. */
 int processaResposta (const char r, const pergunta perg);
 
+/* Recebe cópia dos recursos "rec" do jogador, e imprime as opções de ajuda,
+ * junto ao número de cada recurso disponível. Retorna o numero de caracteres 
+ * impressos ou numero negativo em caso de erro.
+ *
+ * OBS.: Possui retorno pois se planejava usá-lo no tratamento de erros. */
 int printAjuda (const recursos rec);
 
+/* Recebe ponteiro para os recursos "rec" do jogador, a ajuda "escolha" que
+ * ele escolheu, e a pergunta "perg" à qual ele estava respondendo.
+ *
+ * Processa o pedido de ajuda, atualizando os recursos "rec" do jogador, e
+ * operando a ajuda pedida (exceto pular a pergunta: TODO : ajeitar). */
 void processaAjuda (recursos* rec, const char escolha, const pergunta perg);
 
 #endif
