@@ -32,6 +32,7 @@ int main (void)
 		mostraResultado (res);
 		
 		fclose (f);
+		f = NULL;
 	}
 	else {
 		perror ("Nao se pode abrir arquivo");
