@@ -30,6 +30,8 @@ int main (void)
 	if (f) {
 		res = executa (rec, f);
 		mostraResultado (res);
+		
+		fclose (f);
 	}
 	else {
 		perror ("Nao se pode abrir arquivo");
